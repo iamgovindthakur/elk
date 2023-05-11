@@ -16,8 +16,10 @@ services:
       - esdata:/usr/share/elasticsearch/data
 
   logstash:
-    image: my-logstash
+    image: docker.elastic.co/logstash/logstash:7.13.4
     container_name: logstash
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     ports:
       - "5000:5000"
     depends_on:
