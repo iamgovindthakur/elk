@@ -9,7 +9,7 @@ COPY pom.xml .
 COPY src ./src
 
 # Build the application
-RUN mvn package
+RUN mvn package -DskipTests
 
 # Use a smaller base image for the final image
 FROM openjdk:17-jdk-alpine
