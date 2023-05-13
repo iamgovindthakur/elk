@@ -15,7 +15,7 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
     networks:
-      - my-network
+      - myproject-network
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.13.4
@@ -25,10 +25,12 @@ services:
       - logs:/logs   # Mount the logs directory from the Spring Boot app image
     ports:
       - "5000:5000"
+      - "9600:9600"
+      - "4560:4560"
     depends_on:
       - elasticsearch
     networks:
-      - my-network
+      - myproject-network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.13.4
@@ -38,7 +40,7 @@ services:
     depends_on:
       - elasticsearch
     networks:
-      - my-network
+      - myproject-network
 
   springboot-app:
     image: iamgovindthakur/elk:1.0
@@ -46,11 +48,13 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - my-network
+      - myproject-network
 
 volumes:
   esdata:
   logs:  # Volume for logs from the Spring Boot app
 
 networks:
-  my-network:
+  myproject-network:
+    driver: bridge
+
